@@ -1,6 +1,7 @@
 // Admin.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -32,50 +33,52 @@ const Admin = () => {
   }, []); // Empty dependency array ensures this runs once on mount
 
   return (
-    <div className="min-h-screen flex-center bg-gray-50">
-      <h1 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-        Admin Dashboard
-      </h1>
-      <p className="text-gray-600">Welcome to the admin panel.</p>
-      <button
-        onClick={handleLogout}
-        className="mt-6 btn-primary"
-        aria-label="Logout"
-      >
-        Logout
-      </button>
+    <div className="container py-5">
+      <div className="text-center mb-4">
+        <h1 className="display-4 text-primary">Admin Dashboard</h1>
+        <p className="text-muted">Welcome to the admin panel.</p>
+        <button
+          onClick={handleLogout}
+          className="btn btn-danger mt-3"
+          aria-label="Logout"
+        >
+          Logout
+        </button>
+      </div>
 
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">Purchase Details</h2>
+      <div className="mt-5">
+        <h2 className="h4 mb-4">Purchase Details</h2>
         {purchases.length > 0 ? (
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2">User Email</th>
-                <th className="py-2">Items</th>
-                <th className="py-2">Total Amount</th>
-                <th className="py-2">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {purchases.map((purchase, index) => (
-                <tr key={index} className="border-t">
-                  <td className="py-2">{purchase.userEmail}</td>
-                  <td className="py-2">
-                    {purchase.items.map((item, idx) => (
-                      <div key={idx}>
-                        {item.name} (x{item.quantity})
-                      </div>
-                    ))}
-                  </td>
-                  <td className="py-2">₹{purchase.totalAmount.toLocaleString()}</td>
-                  <td className="py-2">{new Date(purchase.createdAt).toLocaleDateString()}</td>
+          <div className="table-responsive">
+            <table className="table table-striped table-hover">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col">User Email</th>
+                  <th scope="col">Items</th>
+                  <th scope="col">Total Amount</th>
+                  <th scope="col">Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {purchases.map((purchase, index) => (
+                  <tr key={index}>
+                    <td>{purchase.userEmail}</td>
+                    <td>
+                      {purchase.items.map((item, idx) => (
+                        <div key={idx}>
+                          {item.name} (x{item.quantity})
+                        </div>
+                      ))}
+                    </td>
+                    <td>₹{purchase.totalAmount.toLocaleString()}</td>
+                    <td>{new Date(purchase.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
-          <p>No purchase details available.</p>
+          <p className="text-center">No purchase details available.</p>
         )}
       </div>
     </div>

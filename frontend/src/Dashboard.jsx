@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Plus, Minus, Star, LogOut, Search } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const products = [
   {
@@ -84,7 +85,7 @@ const Dashboard = () => {
     });
   };
 
-  // Replace with your Stripe public key
+  //  Stripe public key
   const stripePromise = loadStripe("pk_test_51RmW7eI7GzydU2gDmmR8tdufSaaYbHWzszTxGk58tnVstCNwz0PcxGnJxf9hrmbB7kQ9z32FIaRGNeYZ8bLozZFq00nObH0f0M");
 
   const handlePayment = async () => {
@@ -121,57 +122,57 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="container-fluid">
       {/* Header */}
-      <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              TechStore
-            </h1>
-            <div className="hidden md:block flex-1 max-w-xl mx-8">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+      <header className="bg-light shadow-sm sticky-top">
+        <div className="container py-3">
+          <div className="d-flex justify-content-between align-items-center">
+            <h1 className="text-primary fw-bold">TechStore</h1>
+            <div className="d-none d-md-block flex-grow-1 mx-4">
+              <div className="input-group">
+                <span className="input-group-text bg-white border-end-0">
+                  <Search className="text-muted" />
+                </span>
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                  className="form-control border-start-0"
                   aria-label="Search products"
                 />
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <ShoppingCart className="w-6 h-6 text-gray-600 hover:text-indigo-600 transition-colors" />
+            <div className="d-flex align-items-center">
+              <div className="position-relative me-3">
+                <ShoppingCart className="text-muted" />
                 {totalCartItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {totalCartItems}
                   </span>
                 )}
               </div>
               {userInfo ? (
-                <div className="flex items-center space-x-2">
+                <div className="d-flex align-items-center">
                   <img
                     src={userInfo.image}
                     alt={userInfo.name}
-                    className="w-8 h-8 rounded-full border-2 border-indigo-500 hover:scale-105 transition-transform duration-200"
+                    className="rounded-circle border border-primary me-2"
+                    style={{ width: '40px', height: '40px' }}
                   />
-                  <span className="text-sm font-medium text-gray-900 hidden sm:block">{userInfo.name}</span>
+                  <span className="d-none d-sm-inline text-dark fw-medium">{userInfo.name}</span>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center space-x-1 text-gray-600 hover:text-red-600 transition-colors"
+                    className="btn btn-link text-muted ms-3"
                     aria-label="Logout"
                   >
-                    <LogOut className="w-5 h-5" />
-                    <span className="text-sm font-medium hidden sm:block">Logout</span>
+                    <LogOut />
                   </button>
                 </div>
               ) : (
                 <button
                   onClick={() => navigate('/login')}
-                  className="text-gray-600 hover:text-indigo-600 transition-colors"
+                  className="btn btn-link text-muted"
                 >
                   Login
                 </button>
@@ -182,110 +183,103 @@ const Dashboard = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-700 to-purple-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in">
-            Welcome {userInfo?.name || 'Guest'} to TechStore
-          </h2>
-          <p className="text-lg md:text-xl mb-8 opacity-90">
-            Discover the latest electronics at unbeatable prices
-          </p>
-          <button className="bg-white text-indigo-700 px-8 py-3 rounded-lg font-semibold hover:shadow-xl hover:bg-indigo-50 transform hover:-translate-y-1 transition-all duration-300">
-            Shop Now
-          </button>
+      <section className="bg-primary text-white text-center py-5">
+        <div className="container">
+          <h2 className="display-4 fw-bold">Welcome {userInfo?.name || 'Guest'} to TechStore</h2>
+          <p className="lead">Discover the latest electronics at unbeatable prices</p>
+          <button className="btn btn-light btn-lg mt-3">Shop Now</button>
         </div>
       </section>
 
       {/* Products Row */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Products</h2>
-        <div className="flex overflow-x-auto space-x-6">
-          {filteredProducts.map(product => (
-            <div
-              key={product.id}
-              className="flex-none w-64 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                loading="lazy"
-              />
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 truncate-text">{product.name}</h3>
-                <div className="flex items-center mb-3">
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-current' : ''}`} />
-                    ))}
+      <section className="py-5">
+        <div className="container">
+          <h2 className="text-center mb-4">Our Products</h2>
+          <div className="row">
+            {filteredProducts.map(product => (
+              <div key={product.id} className="col-md-3 mb-4">
+                <div className="card h-100 shadow-sm">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="card-img-top "
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.name}</h5>
+                    <div className="d-flex align-items-center mb-2">
+                      <div className="text-warning me-2">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={i < Math.floor(product.rating) ? 'fill-current' : ''} />
+                        ))}
+                      </div>
+                      <span className="text-muted">({product.reviews} reviews)</span>
+                    </div>
+                    <p className="card-text fw-bold">₹{product.price.toLocaleString()}</p>
+                    {cart[product.id] ? (
+                      <div className="d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                        <button
+                          onClick={() => handleDecrement(product.id)}
+                          className="btn btn-outline-secondary btn-sm"
+                          aria-label={`Decrease quantity of ${product.name}`}
+                        >
+                          <Minus />
+                        </button>
+                        <span className="fw-bold">{cart[product.id].quantity}</span>
+                        <button
+                          onClick={() => handleIncrement(product.id)}
+                          className="btn btn-outline-secondary btn-sm"
+                          aria-label={`Increase quantity of ${product.name}`}
+                        >
+                          <Plus />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="btn btn-primary w-100"
+                        aria-label={`Add ${product.name} to cart`}
+                      >
+                        <ShoppingCart className="me-2" />
+                        Add to Cart
+                      </button>
+                    )}
                   </div>
-                  <span className="ml-2 text-sm text-gray-500">({product.reviews} reviews)</span>
                 </div>
-                <p className="text-xl font-bold text-gray-900 mb-4">₹{product.price.toLocaleString()}</p>
-                {cart[product.id] ? (
-                  <div className="flex items-center justify-between bg-indigo-50 rounded-lg p-2">
-                    <button
-                      onClick={() => handleDecrement(product.id)}
-                      className="p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
-                      aria-label={`Decrease quantity of ${product.name}`}
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
-                    <span className="px-4 py-2 font-semibold text-indigo-700">{cart[product.id].quantity}</span>
-                    <button
-                      onClick={() => handleIncrement(product.id)}
-                      className="p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
-                      aria-label={`Increase quantity of ${product.name}`}
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2"
-                    aria-label={`Add ${product.name} to cart`}
-                  >
-                    <ShoppingCart className="w-5 h-5" />
-                    <span>Add to Cart</span>
-                  </button>
-                )}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Cart Summary (Fixed Bottom) */}
       {Object.values(cart).length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-2xl p-4 z-40">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Cart Summary</h2>
-            <div className="space-y-4">
-              {Object.values(cart).map(item => (
-                <div key={item.id} className="flex justify-between items-center">
-                  <div className="flex items-center space-x-4">
-                    <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-lg" />
+        <div className="fixed-bottom bg-white border-top shadow-lg p-3">
+          <div className="container">
+            <h2 className="h5">Cart Summary</h2>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                {Object.values(cart).map(item => (
+                  <div key={item.id} className="d-flex justify-content-between align-items-center mb-2">
+                    <img src={item.image} alt={item.name} className="rounded me-2" style={{ width: '50px', height: '50px' }} />
                     <div>
-                      <p className="font-medium text-gray-900 truncate-text">{item.name}</p>
-                      <p className="text-sm text-gray-500">₹{item.price.toLocaleString()} x {item.quantity}</p>
+                      <p className="mb-0">{item.name}</p>
+                      <small className="text-muted">₹{item.price.toLocaleString()} x {item.quantity}</small>
                     </div>
+                    <p className="fw-bold mb-0">₹{(item.quantity * item.price).toLocaleString()}</p>
                   </div>
-                  <p className="font-semibold text-gray-900">₹{(item.quantity * item.price).toLocaleString()}</p>
-                </div>
-              ))}
-              <hr className="my-4" />
-              <div className="flex justify-between items-center font-semibold text-lg">
-                <span>Total ({totalCartItems} items)</span>
-                <span>₹{totalBill.toLocaleString()}</span>
+                ))}
               </div>
-              <button
-                onClick={handlePayment}
-                className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 rounded-lg font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-                aria-label="Proceed to payment"
-              >
-                Proceed to Payment
-              </button>
+              <div className="text-end">
+                <p className="mb-1">Total ({totalCartItems} items):</p>
+                <p className="h5 fw-bold">₹{totalBill.toLocaleString()}</p>
+                <button
+                  onClick={handlePayment}
+                  className="btn btn-success mt-2"
+                  aria-label="Proceed to payment"
+                >
+                  Proceed to Payment
+                </button>
+              </div>
             </div>
           </div>
         </div>

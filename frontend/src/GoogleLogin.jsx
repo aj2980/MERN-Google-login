@@ -4,6 +4,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { googleAuth } from './api';
 import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const GoogleLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const GoogleLogin = () => {
         const obj = { email, name, token, image };
         localStorage.setItem('user-info', JSON.stringify(obj));
         
-         if (email === 'jainabhishek624@gmail.com') {
+        if (email === 'jainabhishek624@gmail.com') {
           navigate('/admin');
         } else {
           navigate('/dashboard');
@@ -47,15 +48,13 @@ const GoogleLogin = () => {
   });
 
   return (
-    <div className="min-h-screen flex-center bg-gray-50">
-      <div className="text-center space-y-6">
-        <h1 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-          Welcome to TechStore
-        </h1>
-        <p className="text-gray-600">Sign in to explore our products</p>
+    <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+      <div className="text-center p-4 bg-white rounded shadow-sm">
+        <h1 className="display-4 text-primary mb-3">Welcome to TechStore</h1>
+        <p className="text-muted mb-4">Sign in to explore our products</p>
         <button
           onClick={googleLogin}
-          className="btn-primary flex items-center justify-center space-x-2 mx-auto"
+          className="btn btn-primary btn-lg d-flex align-items-center justify-content-center mb-3"
           disabled={loading}
           aria-label="Sign in with Google"
         >
@@ -63,14 +62,14 @@ const GoogleLogin = () => {
             <span>Loading...</span>
           ) : (
             <>
-              <LogIn className="w-5 h-5" />
+              <LogIn className="me-2" />
               <span>Sign in with Google</span>
             </>
           )}
         </button>
         <button
           onClick={adminLogin}
-          className="btn-secondary flex items-center justify-center space-x-2 mx-auto"
+          className="btn btn-secondary btn-lg d-flex align-items-center justify-content-center"
           disabled={loading}
           aria-label="Admin Login"
         >
@@ -78,7 +77,7 @@ const GoogleLogin = () => {
             <span>Loading...</span>
           ) : (
             <>
-              <LogIn className="w-5 h-5" />
+              <LogIn className="me-2" />
               <span>Admin Login</span>
             </>
           )}

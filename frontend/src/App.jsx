@@ -8,6 +8,7 @@ import Success from './Success'; // Import the Success component
 import { useState } from 'react';
 import RefrshHandler from './RefreshHandler';
 import NotFound from './NotFound';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
