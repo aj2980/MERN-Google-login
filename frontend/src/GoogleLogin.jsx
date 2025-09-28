@@ -5,6 +5,7 @@ import { googleAuth } from './api';
 import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css'; // Import enhanced styles
 
 const GoogleLogin = () => {
   const [loading, setLoading] = useState(false);

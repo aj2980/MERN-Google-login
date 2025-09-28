@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleLogin from './GoogleLogin';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import Cart from './Cart'; // Import the Cart component
 import Admin from './admin'; // Import the Admin component
 import Success from './Success'; // Import the Success component
 import { useState } from 'react';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<GoogleWrapper />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="/cart" element={<PrivateRoute element={<Cart />} />} /> {/* Cart Route */}
         <Route path="/admin" element={<PrivateRoute element={<Admin />} />} /> {/* Admin Route */}
         <Route path="/success" element={<Success />} /> {/* Success Route */}
         <Route path="*" element={<NotFound />} />
